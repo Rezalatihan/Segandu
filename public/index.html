@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Best Practices -->
+  <title>PT SELARAS ALAM SEGANDU</title>
+  <meta name="description"
+    content="Company profile PT SELARAS ALAM SEGANDU - Mesin Pirolisis Sampah Plastik Menjadi Energi." />
+  <meta name="keywords" content="Selaras, Alam, Segandu, Pirolisis, Teknologi Lingkungan, Mesin Pirolisis Plastik" />
+  <meta name="author" content="PT Selaras Alam Segandu" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+
+  <!-- ==========================================
+       HEADER & NAVBAR
+       ========================================== -->
+  <header class="site-header" id="header">
+    <div class="container navbar">
+      <!-- Logo Brand -->
+      <a href="#home" class="logo-container" id="brand-logo">
+        <img src="images/logo.jpg" alt="Segandu Logo" class="logo-img" />
+      </a>
+
+      <!-- Menu Navigasi -->
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link active" id="nav-home"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="#tentang" class="nav-link" id="nav-about"><i class="fas fa-building"></i> Tentang Kami</a></li>
+          <li><a href="#toko" class="nav-link" id="nav-toko"><i class="fas fa-store"></i> Toko / Galeri</a></li>
+          <li><a href="/admin/login.html" class="nav-link" target="_blank" style="color: var(--primary);"><i
+                class="fas fa-user-shield"></i> Admin Panel</a></li>
+        </ul>
+      </nav>
+
+      <!-- Theme Switcher & Actions -->
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" id="themeToggle" title="Beralih Tema (Dark/Light)">
+          <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+        <button class="hamburger-btn" id="hamburgerBtn" title="Menu Navigasi">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       HERO BANNER
+       ========================================== -->
+  <section class="hero-section" id="home">
+    <div class="container hero-content">
+      <div>
+        
+        <h1 class="hero-title">
+          Inovasi Pirolisis Terbaik dalam <span>Satu Platform</span>
+        </h1>
+        <p class="hero-subtitle">
+          Selamat datang di portal resmi PT SELARAS ALAM SEGANDU. <h1>SOLUSI UNTUK SEMESTA</h1> Teknologi Pirolisis Modern Untuk Mengolah Sampah Plastik Menjadi Bahan Bakar Alternatif
+          Yang Bernilai Tinggi , Dan Ramah Lingkungan
+        </p>
+        <div class="hero-cta">
+          <a href="#toko" class="btn btn-primary" id="cta-toko">
+            <i class="fas fa-shopping-bag"></i> Lihat & Beli Mesin
+          </a>
+          <a href="#tentang" class="btn btn-secondary" id="cta-tentang">
+            <i class="fas fa-arrow-right"></i> Tentang Kami
+          </a>
+        </div>
+      </div>
+
+  </section>
+
+  <!-- ==========================================
+       SEKSI TENTANG KAMI
+       ========================================== -->
+  <section class="about-section" id="tentang">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">Tentang Kami</span>
+        <h2 class="section-title">Dedikasi untuk Lingkungan yang Berkelanjutan</h2>
+        <p class="section-description">
+          PT SELARAS ALAM SEGANDU adalah Perseroan Terbatas yang bertujuan untuk mengembangkan sistem pengelolaan sampah
+          plastik menjadi energi untuk Indonesia bebas dari permasalahan sampah plastik melalui Teknologi Pirolisis.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SEKSI TOKO / GALERI (SISTEM 3 GRADE KATALOG)
+       ========================================== -->
+  <section class="gallery-section" id="toko">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title" id="gallerySectionTitle">Katalog Grade Mesin Pirolisis</h2>
+        <p class="section-description" id="gallerySectionDesc">
+          Pilih salah satu Grade di bawah ini untuk melihat 3 pilihan mesin pirolisis ber-spesifikasi tinggi.
+        </p>
+      </div>
+
+      <!-- TAMPILAN 1: GRID 3 KATALOG GRADE (UTAMA) -->
+      <div class="folder-album-grid" id="folderAlbumContainer">
+        <!-- 3 Kartu Katalog Grade akan di-render secara dinamis oleh main.js -->
+      </div>
+
+      <!-- TAMPILAN 2: ISI 3 PILIHAN DALAM GRADE YANG DIPILIH -->
+      <div id="singleFolderContainer" style="display: none;">
+        <div class="folder-header-nav" id="folderHeaderNav">
+          <div class="folder-header-title">
+            <h3 id="currentFolderName"><i class="fas fa-layer-group"></i> Grade Katalog</h3>
+            <p id="currentFolderDesc">Deskripsi grade...</p>
+          </div>
+          <button class="back-to-folders-btn" id="backToFoldersBtn">
+            <i class="fas fa-arrow-left"></i> Kembali ke Daftar Grade
+          </button>
+        </div>
+
+        <!-- Grid 3 Pilihan Mesin dalam Grade -->
+        <div class="gallery-grid" id="singleFolderGrid">
+          <!-- 3 Pilihan Mesin akan di-render di sini -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       LIGHTBOX MODAL (SLIDER MULTI-GAMBAR & RESPONSIVE SCROLL)
+       ========================================== -->
+  <div class="lightbox-modal" id="lightboxModal" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+
+      <!-- Fixed Header Modal dengan Tombol Tutup/Kembali -->
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <span class="modal-category-tag" id="modalCategory">HIGH QUALITY</span>
+          <h3 class="modal-title" id="modalTitle">Judul Mesin</h3>
+        </div>
+        <button class="modal-close-btn" id="modalCloseBtn" title="Tutup / Kembali">
+          <span>Tutup</span> <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Area Body Modal (Bisa Di-scroll Secara Responsif) -->
+      <div class="modal-body">
+
+        <!-- Image Slider Carousel (Slide 2-3 Foto Produk) -->
+        <div class="modal-slider-wrapper">
+          <div class="slider-container" id="sliderContainer">
+            <img src="" alt="Foto Produk Mesin" id="modalSliderImage" class="slider-image" />
+          </div>
+
+          <!-- Tombol Navigasi Panah Kiri / Kanan -->
+          <button class="slider-arrow prev-arrow" id="sliderPrevBtn" title="Foto Sebelumnya">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="slider-arrow next-arrow" id="sliderNextBtn" title="Foto Selanjutnya">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+
+          <!-- Counter Foto & Indicator Dots -->
+          <div class="slider-bottom-controls">
+            <span class="slider-badge" id="modalSliderBadge"><i class="fas fa-images"></i> 1 / 3 Foto</span>
+            <div class="slider-dots" id="modalSliderDots"></div>
+          </div>
+        </div>
+
+        <!-- Kapasitas Mesin -->
+        <div class="capacity-box">
+          <strong><i class="fas fa-tachometer-alt"></i> Kapasitas Mesin:</strong>
+          <span id="modalCapacity">5 Kg / Batch</span>
+        </div>
+
+        <!-- Deskripsi Produk -->
+        <p class="modal-desc" id="modalDesc">Deskripsi produk...</p>
+
+        <!-- Tombol Toggle Buka-Tutup Spesifikasi Rinci (Expand/Collapse Accordion) -->
+        <button class="specs-toggle-btn" id="specsToggleBtn" type="button">
+          <span><i class="fas fa-list-alt"></i> Spesifikasi Rinci & Catatan</span>
+          <i class="fas fa-chevron-down" id="specsToggleIcon"></i>
+        </button>
+
+        <!-- Container Spesifikasi & Catatan (Bisa Dibuka Tutup) -->
+        <div class="collapsible-specs open" id="collapsibleSpecs">
+          <!-- Rincian Spesifikasi Teknis Utama -->
+          <div class="specs-box">
+            <h4><i class="fas fa-cogs" style="color: var(--primary);"></i> Spesifikasi Teknis:</h4>
+            <ul>
+              <li><strong>1. Jenis Material:</strong> <span id="modalMatType">-</span></li>
+              <li><strong>2. Panel yang Digunakan:</strong> <span id="modalPanelUsed">-</span></li>
+              <li><strong>3. Manualbook:</strong> <span id="modalManualBook">-</span></li>
+            </ul>
+          </div>
+
+          <!-- Catatan Wajib (PPN & Garansi) -->
+          <div class="notes-box">
+            <h4><i class="fas fa-info-circle"></i> Catatan Wajib:</h4>
+            <ol>
+              <li id="modalNotePpn">Harga belum termasuk PPN 11%</li>
+              <li id="modalNoteWarranty">Garansi Resmi 1 Tahun</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fixed Footer Modal (Harga & Tombol WA) -->
+      <div class="modal-footer">
+        <div>
+          <span class="price-label">Harga Mesin:</span>
+          <div id="modalPrice" class="price-value">Rp 45.000.000</div>
+        </div>
+        <button class="btn btn-primary buy-wa-btn" id="modalBuyBtn">
+          <i class="fab fa-whatsapp"></i> Beli Mesin via WA
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL FORM PEMBELIAN WHATSAPP
+       ========================================== -->
+  <div class="lightbox-modal" id="orderModal" role="dialog" aria-hidden="true">
+    <div class="modal-content" style="max-width: 500px;">
+
+      <div class="modal-header" style="border: none; padding-bottom: 0;">
+        <h3 style="font-size: 20px;"><i class="fab fa-whatsapp" style="color: #22c55e;"></i> Form Pemesanan WA</h3>
+        <button class="modal-close-btn" id="orderModalCloseBtn" title="Tutup">
+          <span>Tutup</span> <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body" style="padding: 24px;">
+        <div
+          style="background: var(--primary-light); padding: 14px; border-radius: var(--radius-md); margin-bottom: 20px;">
+          <div style="font-size: 12px; color: var(--primary); font-weight: 700; text-transform: uppercase;">PRODUK MESIN
+            YANG DIPILIH:</div>
+          <div id="orderProductTitle" style="font-weight: 700; font-size: 16px;">Nama Mesin</div>
+          <div id="orderProductPrice" style="color: var(--text-muted); font-size: 14px;">Harga: Rp 0</div>
+        </div>
+
+        <form id="orderForm">
+          <input type="hidden" id="orderProductTitleInput" />
+          <input type="hidden" id="orderProductPriceInput" />
+          <input type="hidden" id="orderFolderIdInput" />
+
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px;">Nama Lengkap /
+              Perusahaan</label>
+            <input type="text" id="custName" class="form-control" placeholder="Contoh: Budi Santoso (PT Alam Hijau)"
+              required />
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px;">No. WhatsApp
+              Anda</label>
+            <input type="tel" id="custPhone" class="form-control" placeholder="Contoh: 081234567890" required />
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px;">Jumlah Unit
+              (Qty)</label>
+            <input type="number" id="custQty" class="form-control" value="1" min="1" required />
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px;">Catatan / Lokasi
+              Pengiriman</label>
+            <textarea id="custNotes" class="form-control" rows="2"
+              placeholder="Tuliskan lokasi proyek atau spesifikasi khusus..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary"
+            style="width: 100%; justify-content: center; background: #22c55e; border: none; font-size: 16px; padding: 14px;">
+            <i class="fab fa-whatsapp"></i> Kirim Pemesanan ke WhatsApp
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div>
+        <h4 class="footer-heading">Hubungi Kami</h4>
+        <ul class="contact-info">
+          <li><i class="fas fa-map-marker-alt"></i> Jl. Gerih Sibang Kaja, Bali</li>
+          <li><i class="fas fa-envelope"></i> pirolistic@segandu.com</li>
+          <li><i class="fab fa-whatsapp" style="color: #22c55e;"></i> +62 852 1880 3210 (WA Order)</li>
+          <li><i class="fas fa-clock"></i> Senin - Sabtu (08:00 - 17:00)</li>
+        </ul>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 PT SELARAS ALAM SEGANDU.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script JS Utama -->
+  <script src="/js/main.js"></script>
+</body>
+
+</html>

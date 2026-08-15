@@ -1,0 +1,94 @@
+# 🌐 Panduan Deployment Online Website PT Selaras Alam Segandu
+
+Panduan ini berisi langkah-langkah mudah mendepoy aplikasi web Express.js + MongoDB Atlas Anda ke server publik **Render.com** secara **GRATIS** sehingga dapat diakses oleh siapa saja di seluruh dunia tanpa tergantung pada `localhost`.
+
+---
+
+## 📋 Keunggulan Platform Render.com
+- **100% Gratis** untuk Web Service Node.js / Express.js.
+- **Domain HTTPS / SSL Otomatis** (misal: `https://segandu.onrender.com`).
+- **Terintegrasi Otomatis ke GitHub** (setiap kali ada update kodingan, server otomatis terbarui).
+- Sangat stabil dan mudah dikonfigurasi.
+
+---
+
+## 🛠️ Langkah 1: Memastikan Berkas Pendukung (Git & .gitignore)
+
+Pastikan di dalam folder project Anda sudah terdapat file `.gitignore` agar folder `node_modules` tidak ikut terunggah ke GitHub.
+
+Isi file `.gitignore`:
+```text
+node_modules/
+.env
+```
+
+---
+
+## 🐙 Langkah 2: Mengunggah Kodingan ke GitHub
+
+1. Buka [GitHub.com](https://github.com/) dan login/buat akun gratis.
+2. Buat Repository baru dengan nama misalnya `segandu-web`.
+3. Buka Terminal / PowerShell di folder project Anda dan jalankan perintah berikut:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit Segandu web application"
+git branch -M main
+git remote add origin https://github.com/USERNAME_ANDA/segandu-web.git
+git push -u origin main
+```
+
+---
+
+## 🚀 Langkah 3: Membuat Web Service di Render.com
+
+1. Buka website [Render.com](https://render.com/) dan klik **Get Started / Sign In** (Anda bisa login menggunakan akun GitHub).
+2. Di dashboard Render, klik tombol **New +** di pojok kanan atas, lalu pilih **Web Service**.
+3. Hubungkan akun GitHub Anda dan pilih repository `segandu-web`.
+4. Isi formulir konfigurasi berikut:
+   - **Name**: `segandu` *(atau nama lain pilihan Anda)*
+   - **Region**: Singapore *(Terdekat dengan Indonesia)*
+   - **Branch**: `main`
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start` (atau `node index.js`)
+   - **Instance Type**: `Free`
+
+---
+
+## 🔑 Langkah 4: Memasang Environment Variables (MongoDB & JWT)
+
+Di halaman yang sama pada Render Dashboard, scroll ke bagian **Environment Variables** lalu tambahkan kunci-kunci berikut:
+
+| Key / Nama Variable | Value / Isi Nilai |
+| :--- | :--- |
+| `MONGO_URI` | `mongodb+srv://rezacatria1_db_user:VTuX1JfoLXI1RPnG@segandu.m17lvyh.mongodb.net/segandu?retryWrites=true&w=majority` |
+| `JWT_SECRET` | `segandu_secret_key_2026` |
+| `ADMIN_WA_NUMBER` | `6285218803210` |
+| `PORT` | `10000` *(atau biarkan otomatis)* |
+
+---
+
+## 🌐 Langkah 5: Publikasi (Deploy) & Uji Coba Web Online
+
+1. Klik tombol **Create Web Service**.
+2. Render akan secara otomatis mengunduh dependencies (`npm install`) dan menjalankan server Anda.
+3. Setelah proses selesai (status **Live**), Render akan memberikan URL publik resmi Anda, contoh:
+   - 🌐 **Web Publik**: `https://segandu.onrender.com`
+   - 🔑 **Dashboard Admin**: `https://segandu.onrender.com/admin/login.html`
+
+---
+
+## 📌 Penting: Izin IP MongoDB Atlas untuk Server Online
+
+Agar server online Render dapat berkomunikasi dengan database MongoDB Atlas Anda:
+1. Buka dashboard [MongoDB Atlas](https://cloud.mongodb.com/).
+2. Masuk ke menu **Network Access**.
+3. Pastikan sudah ada entry `0.0.0.0/0` (**Allow Access From Anywhere**).
+4. Klik **Confirm**.
+
+---
+
+## 🤝 Perlu Bantuan?
+Saya siap membantu Anda mempersiapkan file project, membuat `.gitignore`, maupun membimbing setiap langkah pembuatan repository Git dan pembuatan akun hingga aplikasi Anda 100% online!
