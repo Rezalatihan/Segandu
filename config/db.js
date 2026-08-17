@@ -1,12 +1,20 @@
 /**
  * @file config/db.js
  * @description Modul penanganan koneksi ke database MongoDB Atlas dan penanaman data awal (Seeding Data).
- * Menyediakan auto-seeding untuk akun Admin Segandu, 3 Kategori Grade, dan 9 Pilihan Produk ber-spesifikasi dengan multi-gambar slider.
  * Menggunakan connection caching agar kompatibel dengan environment serverless (Vercel).
  */
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const dns = require('dns');
+
+// DNS Resolver Google & Cloudflare — wajib di Windows agar SRV lookup mongodb+srv:// berhasil.
+// Dibungkus try-catch agar aman di Vercel Linux (tidak ada efek negatif).
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch (e) {
+  // Di-ignore di Vercel/Linux, hanya aktif di Windows
+}
 
 // Import Model MongoDB
 const Admin = require('../models/Admin');
@@ -17,7 +25,7 @@ const Photo = require('../models/Photo');
 // Mencegah pembuatan koneksi baru di setiap request (cold start)
 let cached = global.mongoose;
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = global.mongoose = { conn: null, promise: null, seeded: false };
 }
 
 /**
@@ -28,7 +36,7 @@ async function connectDB() {
   const MONGO_URI = process.env.MONGO_URI;
 
   if (!MONGO_URI) {
-    throw new Error('❌ MONGO_URI environment variable tidak ditemukan! Pastikan sudah diset di Vercel Environment Variables.');
+    throw new Error('❌ MONGO_URI tidak ditemukan! Pastikan file .env ada dan berisi MONGO_URI.');
   }
 
   // Jika koneksi sudah ada (cached), gunakan langsung
@@ -38,11 +46,11 @@ async function connectDB() {
 
   // Jika belum ada promise koneksi, buat baru
   if (!cached.promise) {
-    const opts = {
-      bufferCommands: false, // Nonaktifkan buffering untuk serverless
-    };
-
-    cached.promise = mongoose.connect(MONGO_URI, opts).then((mongooseInstance) => {
+    cached.promise = mongoose.connect(MONGO_URI, {
+      bufferCommands: false,
+      serverSelectionTimeoutMS: 10000, // Timeout 10 detik
+      socketTimeoutMS: 45000,
+    }).then((mongooseInstance) => {
       console.log('✅ Terhubung ke database MongoDB Atlas Segandu!');
       return mongooseInstance;
     });
@@ -51,16 +59,20 @@ async function connectDB() {
   try {
     cached.conn = await cached.promise;
   } catch (err) {
-    cached.promise = null; // Reset promise agar bisa retry
+    cached.promise = null; // Reset agar bisa retry
     console.error('⚠️ Gagal terhubung ke MongoDB:', err.message);
     throw err;
   }
 
-  // Jalankan seeding data otomatis saat DB berhasil terhubung
-  await seedInitialData();
+  // Seeding hanya dijalankan SEKALI per instance (bukan setiap request)
+  if (!cached.seeded) {
+    cached.seeded = true;
+    await seedInitialData();
+  }
 
   return cached.conn;
 }
+
 
 /**
  * Menanam data awal (Seeding Data) ke database MongoDB.

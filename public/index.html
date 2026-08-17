@@ -235,61 +235,75 @@
        MODAL FORM PEMBELIAN WHATSAPP
        ========================================== -->
   <div class="lightbox-modal" id="orderModal" role="dialog" aria-hidden="true">
-    <div class="modal-content" style="max-width: 500px;">
+    <div class="order-modal-content">
 
-      <div class="modal-header" style="border: none; padding-bottom: 0;">
-        <h3 style="font-size: 20px;"><i class="fab fa-whatsapp" style="color: #22c55e;"></i> Form Pemesanan WA</h3>
+      <!-- Header Form -->
+      <div class="order-modal-header">
+        <div class="order-modal-title-wrap">
+          <div class="order-wa-icon"><i class="fab fa-whatsapp"></i></div>
+          <div>
+            <h3 class="order-modal-title">Form Pemesanan</h3>
+            <p class="order-modal-subtitle">via WhatsApp</p>
+          </div>
+        </div>
         <button class="modal-close-btn" id="orderModalCloseBtn" title="Tutup">
           <span>Tutup</span> <i class="fas fa-times"></i>
         </button>
       </div>
 
-      <div class="modal-body" style="padding: 24px;">
-        <div
-          style="background: var(--primary-light); padding: 14px; border-radius: var(--radius-md); margin-bottom: 20px;">
-          <div style="font-size: 12px; color: var(--primary); font-weight: 700; text-transform: uppercase;">PRODUK MESIN
-            YANG DIPILIH:</div>
-          <div id="orderProductTitle" style="font-weight: 700; font-size: 16px;">Nama Mesin</div>
-          <div id="orderProductPrice" style="color: var(--text-muted); font-size: 14px;">Harga: Rp 0</div>
+      <!-- Body Form -->
+      <div class="order-modal-body">
+
+        <!-- Info Produk Terpilih -->
+        <div class="order-product-info">
+          <span class="order-product-label"><i class="fas fa-box"></i> Produk yang Dipilih</span>
+          <div id="orderProductTitle" class="order-product-name">Nama Mesin</div>
+          <div id="orderProductPrice" class="order-product-price">Harga: Rp 0</div>
         </div>
 
-        <form id="orderForm">
+        <!-- Form Input -->
+        <form id="orderForm" class="order-form">
           <input type="hidden" id="orderProductTitleInput" />
           <input type="hidden" id="orderProductPriceInput" />
           <input type="hidden" id="orderFolderIdInput" />
 
-          <div style="margin-bottom: 16px;">
-            <label style="display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px;">Nama Lengkap /
-              Perusahaan</label>
-            <input type="text" id="custName" class="form-control" placeholder="Contoh: Budi Santoso (PT Alam Hijau)"
-              required />
+          <div class="form-group">
+            <label class="form-label" for="custName">
+              <i class="fas fa-user"></i> Nama Lengkap / Perusahaan
+            </label>
+            <input type="text" id="custName" class="form-control"
+              placeholder="Contoh: Budi Santoso (PT Alam Hijau)" required />
           </div>
 
-          <div style="margin-bottom: 16px;">
-            <label style="display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px;">No. WhatsApp
-              Anda</label>
-            <input type="tel" id="custPhone" class="form-control" placeholder="Contoh: 081234567890" required />
+          <div class="form-group">
+            <label class="form-label" for="custPhone">
+              <i class="fab fa-whatsapp"></i> No. WhatsApp Anda
+            </label>
+            <input type="tel" id="custPhone" class="form-control"
+              placeholder="Contoh: 081234567890" required />
           </div>
 
-          <div style="margin-bottom: 16px;">
-            <label style="display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px;">Jumlah Unit
-              (Qty)</label>
+          <div class="form-group">
+            <label class="form-label" for="custQty">
+              <i class="fas fa-cubes"></i> Jumlah Unit (Qty)
+            </label>
             <input type="number" id="custQty" class="form-control" value="1" min="1" required />
           </div>
 
-          <div style="margin-bottom: 20px;">
-            <label style="display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px;">Catatan / Lokasi
-              Pengiriman</label>
-            <textarea id="custNotes" class="form-control" rows="2"
+          <div class="form-group">
+            <label class="form-label" for="custNotes">
+              <i class="fas fa-map-marker-alt"></i> Catatan / Lokasi Pengiriman
+            </label>
+            <textarea id="custNotes" class="form-control" rows="3"
               placeholder="Tuliskan lokasi proyek atau spesifikasi khusus..."></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary"
-            style="width: 100%; justify-content: center; background: #22c55e; border: none; font-size: 16px; padding: 14px;">
+          <button type="submit" class="btn order-submit-btn" id="orderSubmitBtn">
             <i class="fab fa-whatsapp"></i> Kirim Pemesanan ke WhatsApp
           </button>
         </form>
       </div>
+
     </div>
   </div>
 

@@ -20,9 +20,15 @@ const adminRoutes = require('./routes/adminRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 1. Middleware Koneksi DB — Dipanggil di setiap request (aman karena sudah di-cache)
-// Pola ini wajib untuk environment serverless seperti Vercel agar DB selalu terkoneksi.
-app.use(async (req, res, next) => {
+// 1. Middleware Global Body Parser & File Statis (HTML/CSS/JS Frontend)
+// Static files dilayani TANPA perlu koneksi DB
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// 2. Middleware Koneksi DB — Hanya untuk request /api/*
+// Pola ini aman untuk serverless (Vercel) karena koneksi di-cache
+app.use('/api', async (req, res, next) => {
   try {
     await connectDB();
     next();
@@ -31,11 +37,6 @@ app.use(async (req, res, next) => {
     res.status(500).json({ error: 'Gagal terhubung ke database. Silakan coba beberapa saat lagi.' });
   }
 });
-
-// 2. Registrasi Middleware Global Body Parser & File Statis (HTML/CSS/JS Frontend)
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
 
 // 3. Registrasi Route API Modular Segandu
 app.use('/api/gallery', galleryRoutes); // API Katalog 3 Grade Produk Publik
@@ -61,3 +62,4 @@ if (process.env.NODE_ENV !== 'production') {
     console.log(`=================================================`);
   });
 }
+
