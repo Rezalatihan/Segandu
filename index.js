@@ -20,8 +20,17 @@ const adminRoutes = require('./routes/adminRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 1. Inisialisasi Koneksi MongoDB Atlas & Auto-Seeding Data
-connectDB();
+// 1. Middleware Koneksi DB — Dipanggil di setiap request (aman karena sudah di-cache)
+// Pola ini wajib untuk environment serverless seperti Vercel agar DB selalu terkoneksi.
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('❌ Koneksi DB gagal:', err.message);
+    res.status(500).json({ error: 'Gagal terhubung ke database. Silakan coba beberapa saat lagi.' });
+  }
+});
 
 // 2. Registrasi Middleware Global Body Parser & File Statis (HTML/CSS/JS Frontend)
 app.use(express.json());
@@ -39,11 +48,16 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// 5. Jalankan Server HTTP
-app.listen(PORT, () => {
-  console.log(`=================================================`);
-  console.log(`🚀 Server PT Selaras Alam Segandu Aktif!`);
-  console.log(`🌐 Website Publik: http://localhost:${PORT}`);
-  console.log(`🔑 Dashboard Admin: http://localhost:${PORT}/admin/login.html`);
-  console.log(`=================================================`);
-});
+// 5. Export app untuk Vercel (serverless handler)
+module.exports = app;
+
+// 6. Jalankan Server HTTP (hanya untuk development lokal)
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`=================================================`);
+    console.log(`🚀 Server PT Selaras Alam Segandu Aktif!`);
+    console.log(`🌐 Website Publik: http://localhost:${PORT}`);
+    console.log(`🔑 Dashboard Admin: http://localhost:${PORT}/admin/login.html`);
+    console.log(`=================================================`);
+  });
+}

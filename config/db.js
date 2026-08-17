@@ -2,43 +2,64 @@
  * @file config/db.js
  * @description Modul penanganan koneksi ke database MongoDB Atlas dan penanaman data awal (Seeding Data).
  * Menyediakan auto-seeding untuk akun Admin Segandu, 3 Kategori Grade, dan 9 Pilihan Produk ber-spesifikasi dengan multi-gambar slider.
+ * Menggunakan connection caching agar kompatibel dengan environment serverless (Vercel).
  */
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const dns = require('dns');
-
-// Pengaturan DNS Resolver Google & Cloudflare untuk stabilitas lookup SRV MongoDB Atlas di OS Windows
-try {
-  dns.setServers(['8.8.8.8', '1.1.1.1']);
-} catch (e) {
-  console.warn('⚠️ Gagal mengatur kustom DNS server:', e.message);
-}
 
 // Import Model MongoDB
 const Admin = require('../models/Admin');
 const Category = require('../models/Category');
 const Photo = require('../models/Photo');
 
-let isMongoConnected = false;
+// Cache koneksi untuk environment serverless (Vercel)
+// Mencegah pembuatan koneksi baru di setiap request (cold start)
+let cached = global.mongoose;
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
 
 /**
  * Membuka koneksi ke database MongoDB Atlas.
+ * Menggunakan connection caching untuk kompatibilitas serverless Vercel.
  */
 async function connectDB() {
-  const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://rezacatria1_db_user:VTuX1JfoLXI1RPnG@segandu.m17lvyh.mongodb.net/segandu?retryWrites=true&w=majority';
+  const MONGO_URI = process.env.MONGO_URI;
+
+  if (!MONGO_URI) {
+    throw new Error('❌ MONGO_URI environment variable tidak ditemukan! Pastikan sudah diset di Vercel Environment Variables.');
+  }
+
+  // Jika koneksi sudah ada (cached), gunakan langsung
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  // Jika belum ada promise koneksi, buat baru
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false, // Nonaktifkan buffering untuk serverless
+    };
+
+    cached.promise = mongoose.connect(MONGO_URI, opts).then((mongooseInstance) => {
+      console.log('✅ Terhubung ke database MongoDB Atlas Segandu!');
+      return mongooseInstance;
+    });
+  }
 
   try {
-    await mongoose.connect(MONGO_URI);
-    isMongoConnected = true;
-    console.log('✅ Terhubung ke database MongoDB Atlas Segandu secara realtime!');
-
-    // Jalankan seeding data otomatis saat DB berhasil terhubung
-    await seedInitialData();
+    cached.conn = await cached.promise;
   } catch (err) {
-    isMongoConnected = false;
-    console.warn('⚠️ Gagal terhubung ke MongoDB:', err.message);
+    cached.promise = null; // Reset promise agar bisa retry
+    console.error('⚠️ Gagal terhubung ke MongoDB:', err.message);
+    throw err;
   }
+
+  // Jalankan seeding data otomatis saat DB berhasil terhubung
+  await seedInitialData();
+
+  return cached.conn;
 }
 
 /**
@@ -331,7 +352,7 @@ async function seedInitialData() {
 }
 
 function checkMongoConnection() {
-  return isMongoConnected && mongoose.connection.readyState === 1;
+  return mongoose.connection.readyState === 1;
 }
 
 module.exports = {
